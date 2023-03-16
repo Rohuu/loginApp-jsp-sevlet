@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
 		boolean result=loginService.authenticate(userId, password);
 		
 		if(result) {
+			User user= loginService.getUserDetails(userId);
 			response.sendRedirect("success.jsp");
 			// in case the above parameter is servlet then we have to give the path... not file name
 			// here we have used response.sendRedirect, now we can't use response.PrintWriter in between
