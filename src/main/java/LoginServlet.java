@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import packagedto.User;
+
 import java.io.IOException;
 
 /**
@@ -33,6 +35,8 @@ public class LoginServlet extends HttpServlet {
 		
 		if(result) {
 			User user= loginService.getUserDetails(userId);
+			request.getSession().setAttribute("user", user);
+			// now we have set attributes to session scope and now when it will be redirected to success page then it will have that user object, now we just have to get details in success page
 			response.sendRedirect("success.jsp");
 			// in case the above parameter is servlet then we have to give the path... not file name
 			// here we have used response.sendRedirect, now we can't use response.PrintWriter in between

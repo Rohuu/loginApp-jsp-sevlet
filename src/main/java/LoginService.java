@@ -1,6 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
 
+import packagedto.User;
+
 // BUSINESS SERVICE
 // here different methods are different business services
 public class LoginService {
