@@ -1,5 +1,6 @@
 
 // CONTROLLER
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -35,12 +36,27 @@ public class LoginServlet extends HttpServlet {
 		
 		if(result) {
 			User user= loginService.getUserDetails(userId);
-			request.getSession().setAttribute("user", user);
+//			request.getSession().setAttribute("user", user);
 			// now we have set attributes to session scope and now when it will be redirected to success page then it will have that user object, now we just have to get details in success page
-			response.sendRedirect("success.jsp");
-			// in case the above parameter is servlet then we have to give the path... not file name
-			// here we have used response.sendRedirect, now we can't use response.PrintWriter in between
-			// use only one thing either redirect or write HTML text
+			
+////			response.sendRedirect("success.jsp");
+//			// in case the above parameter is servlet then we have to give the path... not file name
+//			// here we have used response.sendRedirect, now we can't use response.PrintWriter in between
+//			// use only one thing either redirect or write HTML text
+			
+			
+			// this is one way in which we can take the flow of control from once jsp/sevlet to another servlet/jsp	
+						// instead passing instruction to browser to redirect, we have to actually redirect directly server side, browser will not know that redirecting is actually happening to another url/servlet/jsp
+						// for that we will use requestDispatcher object.
+			
+			
+			request.setAttribute("user", user);
+			RequestDispatcher dispatcher=request.getRequestDispatcher("success.jsp");
+			// now we transmit the control to success.jsp with the help of dispatcher
+			// dispatcher takes req and res and dispatches
+			dispatcher.forward(request, response);
+			// now our browser doesn't know that it is another request.
+			// and for this we don't need session object in success page, we can simply set attributes to request only...
 			return;
 		}
 		else {

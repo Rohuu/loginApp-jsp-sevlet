@@ -18,8 +18,11 @@
 <!-- now perfect option left is session object-->
 <h3>Login Successful!</h3>
 
+<!-- now when this page will be opened ,, url will not end with sucess.jsp , rather it will show login.jsp only coz we are using the same request that is being used for login page-->
+
 <%
-User user=(User) session.getAttribute("user");
+User user=(User) request.getAttribute("user");
+// now we are taking user object from request object not from session object
 %>
 
 Hello <%= user.getUserName() %>
